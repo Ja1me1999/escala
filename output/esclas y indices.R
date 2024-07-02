@@ -1,0 +1,73 @@
+
+#Cargar paquetes----------------------------------------------------------------
+
+pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
+               car, #Para recodificar
+               haven,
+               summarytools, #Para descriptivos
+               sjmisc,
+               psych     # para Alfa de Chronbach
+)
+
+options(scipen = 999) # para desactivar notacion cientifica
+rm(list = ls()) # para limpiar el entorno de trabajo
+
+#cargar base -------------------------------------------------------------------
+
+#saveRDS(data, "input/casen2006.rds")
+data <- read_dta("input/casen2006.dta")
+
+
+# Procesamiento (indice) -------------------------------------------------------
+
+datos_proc = data%>%select(educ, oficio, yoprhaj, sexo, edad)%>%
+
+
+na.omit() %>% # Eliminar Na's
+mutate_all(~(as.numeric(.))) # Convertimos todas las variables a numéricas
+
+datos_proc = datos_proc %>% 
+  rowwise() %>%
+  mutate(nivel_ed = mean(c(educ)),
+         ingreso= mean(c(oficio, yoprhaj))) %>% 
+  ungroup()
+
+
+datos_proc = datos_proc %>% 
+  rowwise() %>%
+  mutate(salarioeduc = mean(c(ingreso, nivel_ed))) %>% 
+  ungroup()
+
+
+datos_proc %>% select(salarioeduc) %>% head(10) # Primeros 10 casos
+
+summary(datos_proc$salarioeduc)
+
+
+datos_proc <- datos_proc %>% mutate(salarioeduc = case_when(salarioeduc>=0.25~"si",
+                                                                  salarioeduc<0.25~"no")
+)
+prop.table(table(datos_proc$salarioeduc))*100
+
+#escalas) ----------------------------------------------------------------------
+
+proc_datos <- data %>%  # seleccionamos solo los casos de la ola 1
+  select(y3_3p,y3_2p,y3_1p,y3_4p,y3_5p)%>% na.omit()%>%  # Eliminar Na's
+  mutate_all(~(as.numeric(.))) # items sintomatologia depresiva
+
+head(proc_datos)
+
+cor(proc_datos)
+
+
+psych::alpha(proc_datos)
+
+
+proc_datos <- proc_datos %>% 
+  rowwise() %>% 
+  mutate(ingreso = sum(y3_3p,y3_2p,y3_1p,y3_4p,y3_5p))
+summary(proc_datos$ingreso)
+
+#guardar 
+
+saveRDS(data, "input/casen2006.rds")
