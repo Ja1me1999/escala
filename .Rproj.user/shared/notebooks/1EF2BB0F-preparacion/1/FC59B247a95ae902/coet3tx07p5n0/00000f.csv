@@ -1,0 +1,7 @@
+"0","proc_datos <- data %>% 
+  rowwise() %>% 
+  mutate(ingreso = sum(y3_3p,y3_2p,y3_1p,y3_4p,y3_5p))
+"
+"2","Error in data %>% rowwise() %>% mutate(ingreso = sum(y3_3p, y3_2p, y3_1p,  : 
+  no se pudo encontrar la función ""%>%""
+"

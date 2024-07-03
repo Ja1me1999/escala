@@ -1,0 +1,1 @@
+{"frames":[],"message":"Error in data %>% rowwise() %>% mutate(ingreso = sum(y3_3p, y3_2p, y3_1p,  : \n  no se pudo encontrar la función \"%>%\"\n"}

@@ -1,0 +1,56 @@
+#Instalar paquetes--------------------------------------------------------------
+
+pacman::p_load(AER, haven, sjPlot, dplyr, tidyverse, sjmisc, stargazer,
+               kableExtra,corrplot, GGally,
+               summarytools)
+
+#Llamamos al paquete------------------------------------------------------------
+
+data("CollegeDistance")
+
+#Explorar base de datos---------------------------------------------------------
+
+head(CollegeDistance)
+frq(CollegeDistance)
+dim(CollegeDistance)
+
+#Procesamiento de datos---------------------------------------------------------
+
+datos_proc <- CollegeDistance %>% select(distance, education, gender, ethnicity,
+                                         fcollege, mcollege, wage, region)
+
+datos_reg <- CollegeDistance  %>% select(education, distance)
+
+
+
+summary(datos_proc$distance)
+frq(datos_proc$distance)
+
+#tablas de estadisticos descriptivos--------------------------------------------
+
+sjmisc::descr(datos_proc,
+              show = c("label","range", "mean", "sd", "NA.prc", "n"))%>%
+  kable(.,"markdown")
+
+view(dfSummary(datos_proc, headings=FALSE))
+
+#Correlacion 
+
+M <- cor(datos_reg, use = "complete.obs")
+M
+
+#Grafico de correlacion 
+
+sjPlot::plot_scatter(datos_reg, distance, education)
+
+sjPlot::plot_scatter(datos_reg, education, distance)
+
+corrplot.mixed(M)
+summary(datos_proc)
+
+#Tabla de correlacion
+
+modelo_re <- lm(education ~ distance,data = datos_reg)
+
+tab_model(modelo_re)
+
