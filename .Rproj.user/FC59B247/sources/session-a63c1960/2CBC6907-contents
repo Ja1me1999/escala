@@ -14,11 +14,11 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 #cargar base -------------------------------------------------------------------
 
-#saveRDS(data, "input/casen2006.rds")
 
 #data <- read_dta("input/casen2006.dta")
 
-data <- read_dta("input/casen2006.rds")
+data <- readRDS("~/GitHub/escala/escala/input/casen2006.rds")
+
 
 # Procesamiento (indice) -------------------------------------------------------
 
@@ -59,8 +59,7 @@ datos_proc <- data %>%  # seleccionamos solo los casos de la ola 1
 
 head(datos_proc)
 
-cor(datos_proc)
-
+datos_proc
 
 psych::alpha(datos_proc)
 
@@ -72,4 +71,4 @@ summary(proc_datos$ingreso)
 
 #guardar 
 
-saveRDS(datos_proc, "input/casen2006.dta") 
+saveRDS(datos_proc, "input/casen2006.rds")
