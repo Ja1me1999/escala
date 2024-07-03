@@ -17,7 +17,7 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 #data <- read_dta("input/casen2006.dta")
 
-data <- readRDS("~/GitHub/escala/escala/input/casen2006.rds")
+datos_proc <- readRDS("input/casen2006.rds")
 
 
 # Procesamiento (indice) -------------------------------------------------------
@@ -57,18 +57,17 @@ datos_proc <- data %>%  # seleccionamos solo los casos de la ola 1
   select(y3_3p,y3_2p,y3_1p,y3_4p,y3_5p)%>% na.omit()%>%  # Eliminar Na's
   mutate_all(~(as.numeric(.))) # items sintomatologia depresiva
 
-head(datos_proc)
 
-datos_proc
 
 psych::alpha(datos_proc)
 
 
-datos_proc <- datos_proc %>% 
+datos_escala <- datos_proc %>% 
   rowwise() %>% 
   mutate(ingreso = sum(y3_3p,y3_2p,y3_1p,y3_4p,y3_5p))
-summary(proc_datos$ingreso)
+summary(datos_escala$ingreso)
 
 #guardar 
 
 saveRDS(datos_proc, "input/casen2006.rds")
+

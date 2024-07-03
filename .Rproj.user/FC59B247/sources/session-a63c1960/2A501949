@@ -1,27 +1,26 @@
 {
-    "id": "6AA74279",
-    "path": null,
+    "id": "2A501949",
+    "path": "~/GitHub/trabajo4/R/R02_analisis.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "852952723",
+    "hash": "0",
     "contents": "",
     "dirty": true,
-    "created": 1719963072434.0,
+    "created": 1719965640759.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 7,
     "properties": {
-        "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "0,0",
-        "scrollLine": "0"
+        "cursorPosition": "46,0",
+        "scrollLine": "26"
     },
     "folds": "",
-    "lastKnownWriteTime": 8241989109954060320,
-    "encoding": "",
+    "lastKnownWriteTime": 1717807005,
+    "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1719963378275,
+    "last_content_update": 1719965915467,
     "read_only": false,
     "read_only_alternatives": []
 }
